@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>All-You-Need | Home & Fashion</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--cream:#FAF7F2;--warm:#F0E9DC;--clay:#C8A882;--terracotta:#B5705A;--bark:#7A5C44;--deep:#2E1F14;--pinterest:#E60023;--shadow:rgba(46,31,20,0.12)}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--deep);overflow-x:hidden}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:1rem 5%;background:rgba(250,247,242,0.96);backdrop-filter:blur(14px);border-bottom:1px solid rgba(200,168,130,0.25)}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:600;color:var(--deep);text-decoration:none;letter-spacing:-0.02em;white-space:nowrap}
+.nav-logo span{color:var(--terracotta);font-style:italic}
+.nav-links{display:flex;gap:1.8rem;list-style:none}
+.nav-links a{font-size:0.8rem;color:var(--bark);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;transition:color 0.2s}
+.nav-links a:hover{color:var(--terracotta)}
+.nav-right{display:flex;align-items:center;gap:0.6rem}
+.cart-btn{position:relative;background:none;border:none;cursor:pointer;padding:0.5rem}
+.cart-btn svg{width:22px;height:22px;fill:none;stroke:var(--deep);stroke-width:1.8}
+.cart-count{position:absolute;top:0;right:0;background:var(--terracotta);color:white;font-size:0.6rem;font-weight:700;width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.nav-cta{display:flex;align-items:center;gap:0.4rem;background:var(--pinterest);color:white;padding:0.5rem 1rem;border-radius:50px;font-size:0.78rem;font-weight:500;text-decoration:none;white-space:nowrap;transition:opacity 0.2s}
+.nav-cta:hover{opacity:0.85}
+.nav-cta svg{width:13px;height:13px;fill:white}
+.admin-nav-btn{background:var(--deep);color:var(--clay);border:none;padding:0.5rem 1rem;border-radius:50px;font-size:0.75rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;white-space:nowrap;transition:background 0.2s}
+.admin-nav-btn:hover{background:var(--bark)}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--deep);border-radius:2px;transition:transform 0.3s,opacity 0.3s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;background:var(--cream);border-bottom:1px solid rgba(200,168,130,0.25);padding:1.5rem 5%;z-index:999;flex-direction:column;gap:1.1rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a,.mobile-menu button{font-size:0.95rem;color:var(--bark);text-decoration:none;text-transform:uppercase;letter-spacing:0.08em;background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;text-align:left}
+.mobile-menu a:hover,.mobile-menu button:hover{color:var(--terracotta)}
+
+/* ── SEARCH ── */
+.search-wrap{background:var(--warm);padding:0.85rem 5%;border-bottom:1px solid rgba(200,168,130,0.2);margin-top:64px}
+.search-inner{position:relative;max-width:520px;margin:0 auto}
+.search-inner input{width:100%;padding:0.65rem 1rem 0.65rem 2.6rem;border:1px solid rgba(200,168,130,0.5);border-radius:50px;background:white;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--deep);outline:none;transition:border-color 0.2s}
+.search-inner input:focus{border-color:var(--terracotta)}
+.s-icon{position:absolute;left:0.85rem;top:50%;transform:translateY(-50%);width:16px;height:16px;fill:none;stroke:var(--clay);stroke-width:2;pointer-events:none}
+.filter-tabs{display:flex;gap:0.5rem;flex-wrap:wrap;justify-content:center;padding:0.7rem 5% 0.3rem}
+.filter-tab{padding:0.4rem 1rem;border-radius:50px;border:1px solid rgba(200,168,130,0.5);background:white;font-size:0.78rem;color:var(--bark);cursor:pointer;transition:all 0.2s;white-space:nowrap;font-family:'DM Sans',sans-serif}
+.filter-tab.active,.filter-tab:hover{background:var(--terracotta);color:white;border-color:var(--terracotta)}
+
+/* ── HERO ── */
+.hero{min-height:90vh;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;padding-bottom:2rem}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:5% 4% 5% 8%}
+.hero-tag{display:inline-block;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--terracotta);font-weight:500;margin-bottom:1.2rem;padding:0.38rem 0.95rem;border:1px solid var(--clay);border-radius:50px;width:fit-content}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,4rem);line-height:1.1;font-weight:600;color:var(--deep);margin-bottom:1.1rem;letter-spacing:-0.02em}
+.hero-title em{font-style:italic;color:var(--terracotta)}
+.hero-sub{font-size:0.98rem;line-height:1.75;color:var(--bark);max-width:400px;margin-bottom:1.75rem;font-weight:300}
+.hero-stats{display:flex;gap:1.75rem;margin-bottom:1.75rem;flex-wrap:wrap}
+.stat-num{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:600;color:var(--terracotta)}
+.stat-label{font-size:0.72rem;color:var(--clay);text-transform:uppercase;letter-spacing:0.07em}
+.hero-btns{display:flex;gap:0.85rem;flex-wrap:wrap}
+.btn-primary{display:inline-block;background:var(--terracotta);color:white;padding:0.8rem 1.9rem;border-radius:50px;font-size:0.9rem;font-weight:500;text-decoration:none;transition:background 0.2s,transform 0.15s;border:none;cursor:pointer;font-family:'DM Sans',sans-serif}
+.btn-primary:hover{background:var(--bark);transform:translateY(-2px)}
+.btn-outline{display:inline-flex;align-items:center;color:var(--bark);padding:0.8rem 1.2rem;font-size:0.9rem;text-decoration:none;border-bottom:1px solid var(--clay);background:none;border-top:none;border-left:none;border-right:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:color 0.2s}
+.btn-outline:hover{color:var(--terracotta)}
+.hero-right{position:relative;overflow:hidden}
+.pin-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:4% 2% 4% 0;height:100%}
+.pin-card{border-radius:16px;overflow:hidden;position:relative;transition:transform 0.3s;cursor:pointer}
+.pin-card:hover{transform:scale(1.02)}
+.pin-card:nth-child(1){grid-row:span 2}.pin-card:nth-child(4){grid-row:span 2}
+.pin-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3.2rem;opacity:0.45;min-height:170px}
+.pin-1{background:linear-gradient(145deg,#D4B49A,#A07855)}.pin-2{background:linear-gradient(145deg,#C5D0DC,#7A9AB5)}.pin-3{background:linear-gradient(145deg,#C9B99A,#8E7057)}.pin-4{background:linear-gradient(145deg,#BFAA8C,#96714F)}.pin-5{background:linear-gradient(145deg,#DEC5D0,#B5728A)}
+.pin-overlay{position:absolute;inset:0;background:rgba(46,31,20,0);transition:background 0.3s;display:flex;align-items:flex-end;padding:0.8rem}
+.pin-card:hover .pin-overlay{background:rgba(46,31,20,0.35)}
+.pin-label{opacity:0;color:white;font-size:0.72rem;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;transition:opacity 0.3s;background:rgba(255,255,255,0.2);backdrop-filter:blur(4px);padding:0.28rem 0.65rem;border-radius:50px}
+.pin-card:hover .pin-label{opacity:1}
+
+/* ── REACH ── */
+.reach-section{background:var(--deep);color:white;padding:3.5rem 5%}
+.reach-title{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,3vw,2.4rem);font-weight:600;line-height:1.2;letter-spacing:-0.02em}
+.reach-sub{font-size:0.92rem;color:rgba(255,255,255,0.55);margin-top:0.5rem;margin-bottom:2rem}
+.reach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.25rem}
+.reach-card{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:1.5rem;text-align:center;transition:background 0.2s,transform 0.2s}
+.reach-card:hover{background:rgba(255,255,255,0.12);transform:translateY(-4px)}
+.reach-icon{font-size:2rem;margin-bottom:0.85rem;display:block}
+.reach-card h4{font-size:1rem;font-weight:500;color:white;margin-bottom:0.4rem}
+.reach-card p{font-size:0.8rem;color:rgba(255,255,255,0.55);line-height:1.55}
+.reach-card a{color:var(--clay);text-decoration:none;font-size:0.8rem;display:block;margin-top:0.45rem;transition:color 0.2s}
+.reach-card a:hover{color:white}
+
+/* ── SECTIONS ── */
+.padded{padding:3.5rem 5%}
+.section-tag{display:inline-flex;align-items:center;gap:0.45rem;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--terracotta);font-weight:500;margin-bottom:0.6rem}
+.section-tag::before{content:'';width:20px;height:1px;background:var(--clay);display:block}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,3vw,2.4rem);font-weight:600;color:var(--deep);line-height:1.2;margin-bottom:0.5rem;letter-spacing:-0.02em}
+.section-sub{font-size:0.92rem;color:var(--bark);font-weight:300;max-width:480px;line-height:1.7;margin-bottom:2.2rem}
+
+/* ── BOARDS ── */
+.boards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.board-card{border-radius:16px;overflow:hidden;cursor:pointer;transition:transform 0.3s,box-shadow 0.3s}
+.board-card:hover{transform:translateY(-5px);box-shadow:0 16px 32px var(--shadow)}
+.board-visual{display:grid;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr;gap:3px;height:170px}
+.board-main{grid-row:span 2}
+.bv{width:100%;height:100%}
+.b-a{background:linear-gradient(135deg,#D6C0A8,#A07855)}.b-b{background:linear-gradient(135deg,#E5D5C0,#B58B6A)}.b-c{background:linear-gradient(135deg,#C8B59A,#8E6845)}.b-d{background:linear-gradient(135deg,#DDD0BE,#B0946E)}.b-e{background:linear-gradient(135deg,#CCBBA5,#967055)}.b-f{background:linear-gradient(135deg,#BFB09C,#8A6650)}.b-g{background:linear-gradient(135deg,#D4C4B0,#9C7A58)}.b-h{background:linear-gradient(135deg,#E0D0BA,#B88C6C)}.b-i{background:linear-gradient(135deg,#CAB8A0,#946E4E)}.b-j{background:linear-gradient(135deg,#C5D5E8,#7A9DC0)}.b-k{background:linear-gradient(135deg,#DBADB0,#B5696E)}.b-l{background:linear-gradient(135deg,#C8D9C0,#7A9E72)}
+.board-info{background:white;padding:0.8rem 1rem}
+.board-name{font-family:'Playfair Display',serif;font-size:0.92rem;font-weight:600;color:var(--deep);margin-bottom:0.18rem}
+.board-count{font-size:0.75rem;color:var(--clay)}
+
+/* ── PRODUCTS ── */
+.shop-section{background:var(--warm)}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+.product-card{background:white;border-radius:14px;overflow:hidden;transition:transform 0.3s,box-shadow 0.3s;display:flex;flex-direction:column}
+.product-card:hover{transform:translateY(-4px);box-shadow:0 14px 28px var(--shadow)}
+.product-img{height:190px;display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative;overflow:hidden;flex-shrink:0}
+.product-img-bg{width:100%;height:100%;position:absolute;top:0;left:0;transition:transform 0.4s}
+.product-card:hover .product-img-bg{transform:scale(1.06)}
+.p1{background:linear-gradient(160deg,#E8D5C5,#C49A75)}.p2{background:linear-gradient(160deg,#DCCFBE,#B88C62)}.p3{background:linear-gradient(160deg,#E2D0BC,#C08055)}.p4{background:linear-gradient(160deg,#D8C9B8,#A87C58)}.p5{background:linear-gradient(160deg,#C5D0DC,#7A9AB5)}.p6{background:linear-gradient(160deg,#DEC5D0,#B5728A)}.p7{background:linear-gradient(160deg,#D5E0D0,#80A878)}.p8{background:linear-gradient(160deg,#E5D5C8,#C08A70)}
+.product-icon-el{position:relative;z-index:1;opacity:0.5}
+.cat-badge{position:absolute;top:9px;left:9px;padding:0.25rem 0.65rem;border-radius:50px;font-size:0.66rem;font-weight:500;z-index:2}
+.cat-home{background:#FEF3EC;color:#B5705A}.cat-fashion{background:#F0EEF8;color:#6B5BA0}.cat-lighting{background:#FFFBE6;color:#8B6914}.cat-accessories{background:#F0F8F0;color:#3D7A40}.cat-furniture{background:#FEF3EC;color:#B5705A}
+.save-btn{position:absolute;top:9px;right:9px;background:var(--pinterest);color:white;border:none;border-radius:50px;padding:0.3rem 0.7rem;font-size:0.68rem;font-weight:500;cursor:pointer;opacity:0;transition:opacity 0.2s;z-index:2;display:flex;align-items:center;gap:0.28rem}
+.product-card:hover .save-btn{opacity:1}
+.save-btn svg{width:10px;height:10px;fill:white}
+.product-info{padding:0.9rem 1rem;flex:1;display:flex;flex-direction:column}
+.product-name{font-family:'Playfair Display',serif;font-size:0.92rem;font-weight:600;color:var(--deep);margin-bottom:0.22rem}
+.product-desc{font-size:0.78rem;color:var(--bark);font-weight:300;margin-bottom:0.6rem;flex:1}
+.product-footer{display:flex;align-items:center;justify-content:space-between}
+.product-price{font-size:0.95rem;font-weight:500;color:var(--terracotta)}
+.add-cart-btn{background:var(--terracotta);color:white;border:none;border-radius:50px;padding:0.35rem 0.85rem;font-size:0.75rem;font-weight:500;cursor:pointer;transition:background 0.2s;font-family:'DM Sans',sans-serif}
+.add-cart-btn:hover{background:var(--bark)}
+.no-results{text-align:center;padding:2.5rem;color:var(--clay);font-size:0.95rem;grid-column:1/-1}
+
+/* ── CART DRAWER ── */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:2000;opacity:0;pointer-events:none;transition:opacity 0.3s}
+.cart-overlay.open{opacity:1;pointer-events:all}
+.cart-drawer{position:fixed;top:0;right:-420px;width:min(420px,100vw);height:100%;background:white;z-index:2001;transition:right 0.35s cubic-bezier(0.4,0,0.2,1);display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,0.1)}
+.cart-drawer.open{right:0}
+.cart-header{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.4rem;border-bottom:1px solid rgba(200,168,130,0.2)}
+.cart-header h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:600;color:var(--deep)}
+.close-btn{background:none;border:none;cursor:pointer;font-size:1.3rem;color:var(--bark);line-height:1;padding:0.2rem}
+.cart-items{flex:1;overflow-y:auto;padding:1.1rem 1.4rem}
+.cart-empty{text-align:center;padding:2.5rem 1rem;color:var(--clay)}
+.cart-empty span{font-size:2.8rem;display:block;margin-bottom:0.85rem}
+.cart-empty p{font-size:0.88rem;line-height:1.6}
+.cart-item{display:flex;gap:0.85rem;align-items:center;padding:0.85rem 0;border-bottom:1px solid rgba(200,168,130,0.15)}
+.cart-thumb{width:52px;height:52px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.cart-item-info{flex:1;min-width:0}
+.cart-item-name{font-weight:500;font-size:0.88rem;color:var(--deep);margin-bottom:0.18rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cart-item-price{font-size:0.85rem;color:var(--terracotta);font-weight:500}
+.cart-qty{display:flex;align-items:center;gap:0.45rem;margin-top:0.3rem}
+.qty-btn{width:23px;height:23px;border-radius:50%;border:1px solid rgba(200,168,130,0.5);background:none;cursor:pointer;font-size:0.88rem;color:var(--bark);display:flex;align-items:center;justify-content:center;transition:background 0.15s}
+.qty-btn:hover{background:var(--warm)}
+.qty-num{font-size:0.82rem;font-weight:500;min-width:16px;text-align:center}
+.remove-item{background:none;border:none;cursor:pointer;color:var(--clay);font-size:0.95rem;padding:0.2rem;flex-shrink:0;transition:color 0.2s}
+.remove-item:hover{color:var(--terracotta)}
+.cart-footer{padding:1.1rem 1.4rem;border-top:1px solid rgba(200,168,130,0.2)}
+.cart-total{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.85rem}
+.cart-total span{font-size:0.92rem;color:var(--bark)}
+.cart-total strong{font-size:1.15rem;color:var(--deep);font-weight:600}
+.checkout-btn{width:100%;background:var(--terracotta);color:white;border:none;border-radius:50px;padding:0.9rem;font-family:'DM Sans',sans-serif;font-size:0.92rem;font-weight:500;cursor:pointer;transition:background 0.2s;margin-bottom:0.55rem}
+.checkout-btn:hover{background:var(--bark)}
+.continue-btn{width:100%;background:none;border:1px solid rgba(200,168,130,0.5);border-radius:50px;padding:0.7rem;font-family:'DM Sans',sans-serif;font-size:0.85rem;color:var(--bark);cursor:pointer;transition:border-color 0.2s}
+.continue-btn:hover{border-color:var(--terracotta);color:var(--terracotta)}
+
+/* ── MODALS ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:3000;display:none;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.open{display:flex}
+.modal{background:white;border-radius:22px;padding:1.75rem;width:100%;max-width:460px;max-height:90vh;overflow-y:auto}
+.modal h3{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:600;color:var(--deep);margin-bottom:0.3rem}
+.modal>.modal-sub{font-size:0.85rem;color:var(--bark);margin-bottom:1.3rem}
+.form-group{margin-bottom:0.85rem}
+.form-group label{display:block;font-size:0.72rem;font-weight:500;color:var(--bark);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.3rem}
+.form-group input,.form-group select,.form-group textarea{width:100%;border:1px solid rgba(200,168,130,0.5);border-radius:9px;padding:0.65rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--deep);background:var(--cream);outline:none;transition:border-color 0.2s;-webkit-appearance:none;appearance:none}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--terracotta)}
+.form-group textarea{min-height:80px;resize:vertical}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:0.7rem}
+.modal-btns{display:flex;gap:0.7rem;margin-top:1.1rem}
+.modal-cancel{flex:1;background:none;border:1px solid rgba(200,168,130,0.5);border-radius:50px;padding:0.75rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.88rem;color:var(--bark);transition:border-color 0.2s}
+.modal-cancel:hover{border-color:var(--terracotta);color:var(--terracotta)}
+.modal-submit{flex:2;background:var(--terracotta);color:white;border:none;border-radius:50px;padding:0.75rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:500;transition:background 0.2s}
+.modal-submit:hover{background:var(--bark)}
+.success-wrap{text-align:center;padding:1rem}
+.success-wrap span{font-size:2.8rem;display:block;margin-bottom:0.7rem}
+.success-wrap h4{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--deep);margin-bottom:0.45rem}
+.success-wrap p{color:var(--bark);font-size:0.88rem;line-height:1.6}
+
+/* ── ADMIN LOGIN ── */
+.admin-login-box{max-width:360px}
+.admin-login-box .lock-icon{font-size:3rem;text-align:center;display:block;margin-bottom:1rem}
+.admin-err{color:#c0392b;font-size:0.82rem;margin-top:0.5rem;display:none}
+
+/* ── ADMIN PANEL ── */
+.admin-panel{position:fixed;inset:0;background:var(--cream);z-index:4000;overflow-y:auto;display:none}
+.admin-panel.open{display:block}
+.admin-topbar{background:var(--deep);color:white;padding:1rem 5%;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.admin-topbar h2{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:600}
+.admin-topbar span{font-size:0.75rem;color:var(--clay)}
+.admin-exit{background:var(--terracotta);color:white;border:none;padding:0.5rem 1.1rem;border-radius:50px;font-size:0.82rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background 0.2s}
+.admin-exit:hover{background:var(--bark)}
+.admin-body{padding:2rem 5%;max-width:960px;margin:0 auto}
+.admin-section-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:600;color:var(--deep);margin-bottom:1.5rem;padding-bottom:0.75rem;border-bottom:1px solid rgba(200,168,130,0.3)}
+.add-product-form{background:white;border-radius:18px;padding:1.75rem;border:1px solid rgba(200,168,130,0.25);margin-bottom:2.5rem}
+.add-product-form h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;color:var(--deep);margin-bottom:1.2rem}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.85rem}
+.form-grid .full{grid-column:1/-1}
+.admin-form-group{margin-bottom:0}
+.admin-form-group label{display:block;font-size:0.72rem;font-weight:500;color:var(--bark);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.3rem}
+.admin-form-group input,.admin-form-group select,.admin-form-group textarea{width:100%;border:1px solid rgba(200,168,130,0.5);border-radius:9px;padding:0.65rem 0.9rem;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--deep);background:var(--cream);outline:none;transition:border-color 0.2s;-webkit-appearance:none;appearance:none}
+.admin-form-group input:focus,.admin-form-group select:focus,.admin-form-group textarea:focus{border-color:var(--terracotta)}
+.admin-form-group textarea{min-height:70px;resize:vertical}
+.emoji-preview{font-size:2.5rem;text-align:center;padding:0.5rem;background:var(--warm);border-radius:9px;min-height:60px;display:flex;align-items:center;justify-content:center}
+.add-btn{background:var(--terracotta);color:white;border:none;border-radius:50px;padding:0.8rem 2rem;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;cursor:pointer;transition:background 0.2s;margin-top:1rem}
+.add-btn:hover{background:var(--bark)}
+.admin-products-list{display:flex;flex-direction:column;gap:0.75rem}
+.admin-product-row{background:white;border-radius:14px;padding:1rem 1.2rem;display:flex;align-items:center;gap:1rem;border:1px solid rgba(200,168,130,0.22);transition:box-shadow 0.2s}
+.admin-product-row:hover{box-shadow:0 4px 16px var(--shadow)}
+.arow-icon{font-size:2rem;width:50px;height:50px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.arow-info{flex:1;min-width:0}
+.arow-name{font-weight:500;color:var(--deep);font-size:0.92rem;margin-bottom:0.18rem}
+.arow-meta{font-size:0.78rem;color:var(--clay)}
+.arow-price{font-size:1rem;font-weight:500;color:var(--terracotta);white-space:nowrap}
+.arow-actions{display:flex;gap:0.5rem;flex-shrink:0}
+.edit-btn,.del-btn{border:none;border-radius:8px;padding:0.38rem 0.8rem;font-size:0.78rem;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;transition:opacity 0.2s}
+.edit-btn{background:var(--warm);color:var(--bark)}
+.edit-btn:hover{opacity:0.75}
+.del-btn{background:#FEE2E2;color:#c0392b}
+.del-btn:hover{opacity:0.75}
+.admin-empty{text-align:center;padding:2rem;color:var(--clay);font-size:0.9rem}
+.badge-default{background:var(--warm);color:var(--bark);padding:0.2rem 0.6rem;border-radius:50px;font-size:0.7rem;font-weight:500}
+
+/* ── CONTACT ── */
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:start}
+.social-links{display:flex;flex-direction:column;gap:0.75rem;margin-top:1.3rem}
+.social-link{display:flex;align-items:center;gap:0.9rem;padding:0.85rem 1rem;background:white;border-radius:13px;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;border:1px solid rgba(200,168,130,0.22)}
+.social-link:hover{transform:translateX(5px);box-shadow:0 8px 20px var(--shadow)}
+.soc-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.soc-icon svg{width:18px;height:18px}
+.si-pin{background:#FCE8EB}.si-pin svg{fill:var(--pinterest)}
+.si-ig{background:#FEF0E5}.si-ig svg{fill:#E4601A}
+.si-wa{background:#EDFBF1}.si-wa svg{fill:#25D366}
+.si-em{background:#EFF6FF}.si-em svg{fill:#3B82F6}
+.soc-name{font-weight:500;color:var(--deep);font-size:0.9rem}
+.soc-handle{font-size:0.78rem;color:var(--clay)}
+.contact-form-box{background:white;border-radius:20px;padding:2rem;border:1px solid rgba(200,168,130,0.22)}
+.contact-form-box h3{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:600;color:var(--deep);margin-bottom:0.3rem}
+.contact-form-box>p{font-size:0.85rem;color:var(--bark);margin-bottom:1.3rem}
+.submit-btn{width:100%;background:var(--terracotta);color:white;border:none;border-radius:50px;padding:0.85rem;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;cursor:pointer;margin-top:0.4rem;transition:background 0.2s}
+.submit-btn:hover{background:var(--bark)}
+
+/* ── FOOTER ── */
+footer{background:var(--deep);color:rgba(255,255,255,0.6);padding:2rem 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.85rem}
+.footer-logo{font-family:'Playfair Display',serif;font-size:1.2rem;color:white;font-weight:600}
+.footer-logo span{color:var(--clay);font-style:italic}
+.footer-pin{display:flex;align-items:center;gap:0.4rem;color:white;text-decoration:none;font-size:0.8rem;background:var(--pinterest);padding:0.48rem 1rem;border-radius:50px;font-weight:500;transition:opacity 0.2s}
+.footer-pin:hover{opacity:0.85}
+.footer-pin svg{width:13px;height:13px;fill:white}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--deep);color:white;padding:0.7rem 1.4rem;border-radius:50px;font-size:0.84rem;z-index:9999;transition:transform 0.3s;white-space:nowrap;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,0.2)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.hero-tag{animation:fadeUp 0.6s ease both}.hero-title{animation:fadeUp 0.6s 0.1s ease both}.hero-sub{animation:fadeUp 0.6s 0.18s ease both}.hero-stats{animation:fadeUp 0.6s 0.24s ease both}.hero-btns{animation:fadeUp 0.6s 0.3s ease both}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  .hero{grid-template-columns:1fr;min-height:auto;padding-top:1rem}.hero-right{display:none}.hero-left{padding:4% 5%}
+  .nav-links,.nav-cta,.admin-nav-btn{display:none}.hamburger{display:flex}
+  .contact-wrap{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}
+  .form-grid{grid-template-columns:1fr}.form-grid .full{grid-column:1}
+}
+@media(max-width:600px){
+  .boards-grid,.products-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .reach-grid{grid-template-columns:repeat(2,1fr)}
+  footer{flex-direction:column;text-align:center}
+  .cart-drawer{width:100vw}
+  .filter-tabs{gap:0.35rem;padding-bottom:0.4rem}
+  .admin-product-row{flex-wrap:wrap}
+}
+@media(max-width:380px){
+  .products-grid,.boards-grid{grid-template-columns:1fr}
+  .reach-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- CART OVERLAY -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+
+<!-- CART DRAWER -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h3>Your Cart <span id="cartHeaderCount" style="font-size:0.82rem;color:var(--clay);font-family:'DM Sans',sans-serif;font-weight:400"></span></h3>
+    <button class="close-btn" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total"><span>Total</span><strong id="cartTotal">₹0</strong></div>
+    <button class="checkout-btn" onclick="openCheckout()">Proceed to Checkout</button>
+    <button class="continue-btn" onclick="closeCart()">Continue Shopping</button>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-overlay" id="checkoutModal">
+  <div class="modal" id="checkoutContent">
+    <h3>Complete Your Order</h3>
+    <p class="modal-sub">Fill in your details and we'll confirm via WhatsApp or email.</p>
+    <div class="form-row">
+      <div class="form-group"><label>First Name</label><input type="text" placeholder="Priya"/></div>
+      <div class="form-group"><label>Last Name</label><input type="text" placeholder="Sharma"/></div>
+    </div>
+    <div class="form-group"><label>Email</label><input type="email" placeholder="priya@example.com"/></div>
+    <div class="form-group"><label>Phone / WhatsApp</label><input type="tel" placeholder="+91 98765 43210"/></div>
+    <div class="form-group"><label>Delivery Address</label><input type="text" placeholder="Flat / House No., Street"/></div>
+    <div class="form-row">
+      <div class="form-group"><label>City</label><input type="text" placeholder="Pune"/></div>
+      <div class="form-group"><label>PIN Code</label><input type="text" placeholder="411001"/></div>
+    </div>
+    <div class="form-group">
+      <label>Payment Method</label>
+      <select><option>Cash on Delivery</option><option>UPI / GPay / PhonePe</option><option>Net Banking</option><option>Credit / Debit Card</option></select>
+    </div>
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="closeCheckout()">Cancel</button>
+      <button class="modal-submit" onclick="placeOrder()">Place Order 🎉</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal-overlay" id="adminLoginModal">
+  <div class="modal admin-login-box">
+    <span class="lock-icon">🔐</span>
+    <h3 style="text-align:center">Admin Login</h3>
+    <p class="modal-sub" style="text-align:center">Enter your admin password to manage products.</p>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="adminPassInput" placeholder="Enter password" onkeydown="if(event.key==='Enter')checkAdminLogin()"/>
+    </div>
+    <p class="admin-err" id="adminErr">Incorrect password. Please try again.</p>
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="closeAdminLogin()">Cancel</button>
+      <button class="modal-submit" onclick="checkAdminLogin()">Login</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT PRODUCT MODAL -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <h3>Edit Product</h3>
+    <p class="modal-sub">Update the product details below.</p>
+    <div class="form-group"><label>Product Name</label><input type="text" id="editName"/></div>
+    <div class="form-group"><label>Description</label><textarea id="editDesc"></textarea></div>
+    <div class="form-row">
+      <div class="form-group"><label>Price (₹)</label><input type="number" id="editPrice"/></div>
+      <div class="form-group"><label>Category</label>
+        <select id="editCat">
+          <option value="home">Home Decor</option><option value="fashion">Fashion</option>
+          <option value="furniture">Furniture</option><option value="lighting">Lighting</option><option value="accessories">Accessories</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Emoji Icon</label><input type="text" id="editIcon" maxlength="2"/></div>
+      <div class="form-group"><label>Preview</label><div class="emoji-preview" id="editIconPreview">🛋</div></div>
+    </div>
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="closeEditModal()">Cancel</button>
+      <button class="modal-submit" onclick="saveEdit()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-topbar">
+    <div>
+      <h2>Admin Panel — All-You-Need</h2>
+      <span>Manage your products here</span>
+    </div>
+    <button class="admin-exit" onclick="exitAdmin()">← Back to Store</button>
+  </div>
+  <div class="admin-body">
+    <h2 class="admin-section-title">Add New Product</h2>
+    <div class="add-product-form">
+      <h3>Product Details</h3>
+      <div class="form-grid">
+        <div class="admin-form-group">
+          <label>Product Name *</label>
+          <input type="text" id="ap-name" placeholder="e.g. Rattan Side Table"/>
+        </div>
+        <div class="admin-form-group">
+          <label>Price (₹) *</label>
+          <input type="number" id="ap-price" placeholder="e.g. 4999" min="1"/>
+        </div>
+        <div class="admin-form-group full">
+          <label>Description *</label>
+          <textarea id="ap-desc" placeholder="e.g. Handwoven rattan, natural finish, 45cm diameter"></textarea>
+        </div>
+        <div class="admin-form-group">
+          <label>Category *</label>
+          <select id="ap-cat">
+            <option value="home">🏠 Home Decor</option>
+            <option value="fashion">👗 Fashion</option>
+            <option value="furniture">🛋 Furniture</option>
+            <option value="lighting">💡 Lighting</option>
+            <option value="accessories">✨ Accessories</option>
+          </select>
+        </div>
+        <div class="admin-form-group">
+          <label>Background Style</label>
+          <select id="ap-bg">
+            <option value="p1">Warm Peach</option><option value="p2">Soft Tan</option>
+            <option value="p3">Burnt Orange</option><option value="p4">Mocha Brown</option>
+            <option value="p5">Dusty Blue</option><option value="p6">Dusty Rose</option>
+            <option value="p7">Sage Green</option><option value="p8">Terracotta</option>
+          </select>
+        </div>
+        <div class="admin-form-group">
+          <label>Emoji Icon *</label>
+          <input type="text" id="ap-icon" placeholder="e.g. 🪑" maxlength="2" oninput="updateIconPreview()"/>
+        </div>
+        <div class="admin-form-group">
+          <label>Icon Preview</label>
+          <div class="emoji-preview" id="iconPreview">🛋</div>
+        </div>
+      </div>
+      <button class="add-btn" onclick="addProduct()">+ Add Product to Store</button>
+    </div>
+
+    <h2 class="admin-section-title">All Products <span id="adminProductCount" style="font-size:0.9rem;font-family:'DM Sans',sans-serif;font-weight:400;color:var(--clay)"></span></h2>
+    <div class="admin-products-list" id="adminProductsList"></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">All-<span>You</span>-Need</a>
+  <ul class="nav-links">
+    <li><a href="#shop">Shop</a></li>
+    <li><a href="#boards">Boards</a></li>
+    <li><a href="#reach">Reach Us</a></li>
+    <li><a href="#contact">Message</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="cart-btn" onclick="openCart()" aria-label="Cart">
+      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+    <button class="admin-nav-btn" onclick="openAdminLogin()">⚙ Admin</button>
+    <a href="https://pinterest.com" target="_blank" class="nav-cta">
+      <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 010 .345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+      Pinterest
+    </a>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#shop" onclick="toggleMenu()">Shop</a>
+  <a href="#boards" onclick="toggleMenu()">Boards</a>
+  <a href="#reach" onclick="toggleMenu()">Reach Us</a>
+  <a href="#contact" onclick="toggleMenu()">Send Message</a>
+  <button onclick="toggleMenu();openAdminLogin()">⚙ Admin Panel</button>
+  <a href="https://pinterest.com" target="_blank">Follow on Pinterest ↗</a>
+</div>
+
+<!-- SEARCH -->
+<div class="search-wrap">
+  <div class="search-inner">
+    <svg class="s-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    <input type="text" id="searchInput" placeholder="Search home decor, fashion, furniture…" oninput="filterProducts()"/>
+  </div>
+</div>
+<div class="filter-tabs">
+  <button class="filter-tab active" onclick="setFilter('all',this)">All</button>
+  <button class="filter-tab" onclick="setFilter('home',this)">🏠 Home Decor</button>
+  <button class="filter-tab" onclick="setFilter('fashion',this)">👗 Fashion</button>
+  <button class="filter-tab" onclick="setFilter('furniture',this)">🛋 Furniture</button>
+  <button class="filter-tab" onclick="setFilter('lighting',this)">💡 Lighting</button>
+  <button class="filter-tab" onclick="setFilter('accessories',this)">✨ Accessories</button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <span class="hero-tag">Home & Fashion · Pinterest Business</span>
+    <h1 class="hero-title">Everything Your<br/>Home &amp; Style<br/><em>Deserves</em></h1>
+    <p class="hero-sub">Curated interiors, handpicked fashion, and endless inspiration for spaces and styles you love to live in.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">50K+</div><div class="stat-label">Pinterest Followers</div></div>
+      <div class="stat"><div class="stat-num" id="heroProductCount">12</div><div class="stat-label">Products</div></div>
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Collections</div></div>
+    </div>
+    <div class="hero-btns">
+      <a href="#shop" class="btn-primary">Shop Now</a>
+      <a href="#boards" class="btn-outline">Browse Boards →</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="pin-grid">
+      <div class="pin-card"><div class="pin-inner pin-1">🛋</div><div class="pin-overlay"><span class="pin-label">Living Room</span></div></div>
+      <div class="pin-card"><div class="pin-inner pin-2">👗</div><div class="pin-overlay"><span class="pin-label">Fashion</span></div></div>
+      <div class="pin-card"><div class="pin-inner pin-3">🪴</div><div class="pin-overlay"><span class="pin-label">Plants</span></div></div>
+      <div class="pin-card"><div class="pin-inner pin-4">🛏</div><div class="pin-overlay"><span class="pin-label">Bedroom</span></div></div>
+      <div class="pin-card"><div class="pin-inner pin-5">👜</div><div class="pin-overlay"><span class="pin-label">Bags</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- REACH -->
+<section class="reach-section" id="reach">
+  <div class="section-tag" style="color:var(--clay)">How to Reach Us</div>
+  <h2 class="reach-title">We're Always Here For You</h2>
+  <p class="reach-sub">Multiple ways to connect — pick what works best for you.</p>
+  <div class="reach-grid">
+    <div class="reach-card"><span class="reach-icon">📍</span><h4>Visit Us</h4><p>Koregaon Park, Pune<br/>Maharashtra — 411001</p><a href="https://maps.google.com" target="_blank">Get Directions →</a></div>
+    <div class="reach-card"><span class="reach-icon">📞</span><h4>Call Us</h4><p>Mon–Sat, 10am – 7pm</p><a href="tel:+919876543210">+91 98765 43210</a></div>
+    <div class="reach-card"><span class="reach-icon">✉️</span><h4>Email Us</h4><p>We reply within 24 hours</p><a href="mailto:hello@allyouneed.in">hello@allyouneed.in</a></div>
+    <div class="reach-card"><span class="reach-icon">💬</span><h4>WhatsApp</h4><p>Quick replies & order updates</p><a href="https://wa.me/919876543210" target="_blank">Chat Now →</a></div>
+    <div class="reach-card"><span class="reach-icon">📌</span><h4>Pinterest</h4><p>Daily inspiration & boards</p><a href="https://pinterest.com" target="_blank">@allyouneed.decor</a></div>
+    <div class="reach-card"><span class="reach-icon">🕐</span><h4>Business Hours</h4><p>Mon–Fri: 10am–7pm<br/>Sat: 11am–5pm · Sun: Closed</p></div>
+  </div>
+</section>
+
+<!-- BOARDS -->
+<section class="padded" id="boards">
+  <div class="section-tag">Featured Boards</div>
+  <h2 class="section-title">Our Pinterest Collections</h2>
+  <p class="section-sub">Handcrafted boards for every corner of your home and wardrobe.</p>
+  <div class="boards-grid">
+    <div class="board-card"><div class="board-visual"><div class="bv b-a board-main"></div><div class="bv b-b"></div><div class="bv b-c"></div></div><div class="board-info"><div class="board-name">Cozy Living Rooms</div><div class="board-count">248 pins · 12K followers</div></div></div>
+    <div class="board-card"><div class="board-visual"><div class="bv b-d board-main"></div><div class="bv b-e"></div><div class="bv b-f"></div></div><div class="board-info"><div class="board-name">Bedroom Sanctuaries</div><div class="board-count">183 pins · 9.4K followers</div></div></div>
+    <div class="board-card"><div class="board-visual"><div class="bv b-g board-main"></div><div class="bv b-h"></div><div class="bv b-i"></div></div><div class="board-info"><div class="board-name">Kitchen & Dining</div><div class="board-count">314 pins · 18K followers</div></div></div>
+    <div class="board-card"><div class="board-visual"><div class="bv b-j board-main"></div><div class="bv b-k"></div><div class="bv b-l"></div></div><div class="board-info"><div class="board-name">Fashion Essentials</div><div class="board-count">412 pins · 24K followers</div></div></div>
+    <div class="board-card"><div class="board-visual"><div class="bv b-f board-main"></div><div class="bv b-c"></div><div class="bv b-g"></div></div><div class="board-info"><div class="board-name">Outdoor & Balcony</div><div class="board-count">129 pins · 6.8K followers</div></div></div>
+    <div class="board-card"><div class="board-visual"><div class="bv b-k board-main"></div><div class="bv b-e"></div><div class="bv b-h"></div></div><div class="board-info"><div class="board-name">Boho Style & Looks</div><div class="board-count">271 pins · 22K followers</div></div></div>
+  </div>
+</section>
+
+<!-- SHOP -->
+<section class="padded shop-section" id="shop">
+  <div class="section-tag">Shop Products</div>
+  <h2 class="section-title">Shop Our Picks</h2>
+  <p class="section-sub">Home decor & fashion — all handpicked and shoppable.</p>
+  <div class="products-grid" id="productsGrid"></div>
+</section>
+
+<!-- CONTACT -->
+<section class="padded" id="contact">
+  <div class="contact-wrap">
+    <div>
+      <div class="section-tag">Connect With Us</div>
+      <h2 class="section-title">Let's Stay Connected</h2>
+      <p class="section-sub">Follow for daily inspiration, or reach out for collabs, wholesale, or custom orders.</p>
+      <div class="social-links">
+        <a href="https://pinterest.com" target="_blank" class="social-link">
+          <div class="soc-icon si-pin"><svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 010 .345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg></div>
+          <div><div class="soc-name">Pinterest</div><div class="soc-handle">@allyouneed.decor</div></div>
+        </a>
+        <a href="#" class="social-link">
+          <div class="soc-icon si-ig"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
+          <div><div class="soc-name">Instagram</div><div class="soc-handle">@allyouneed.home</div></div>
+        </a>
+        <a href="https://wa.me/919876543210" target="_blank" class="social-link">
+          <div class="soc-icon si-wa"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
+          <div><div class="soc-name">WhatsApp</div><div class="soc-handle">+91 98765 43210</div></div>
+        </a>
+        <a href="mailto:hello@allyouneed.in" class="social-link">
+          <div class="soc-icon si-em"><svg viewBox="0 0 24 24"><path d="M0 3v18h24V3H0zm6.623 7.929l-4.623 5.712V5.261l4.623 5.668zm-4.141-5.929H21.52L12 13.149 2.482 5zm13.518 7.929l4.641-5.682v13.35l-4.641-5.668zM12 15.169l-3.54-4.363-5.46 6.728V6.66l9 7.331 9-7.294v10.87l-5.46-6.727L12 15.169z"/></svg></div>
+          <div><div class="soc-name">Email</div><div class="soc-handle">hello@allyouneed.in</div></div>
+        </a>
+      </div>
+    </div>
+    <div class="contact-form-box">
+      <h3>Send a Message</h3>
+      <p>Collaborations, wholesale, or just a hello — we'd love to hear from you.</p>
+      <div class="form-group"><label>Your Name</label><input type="text" placeholder="Priya Sharma"/></div>
+      <div class="form-group"><label>Email Address</label><input type="email" placeholder="priya@example.com"/></div>
+      <div class="form-group"><label>Subject</label><input type="text" placeholder="Collaboration / Order / Query"/></div>
+      <div class="form-group"><label>Message</label><textarea placeholder="Tell us about your project or inquiry..." style="min-height:85px;resize:vertical"></textarea></div>
+      <button class="submit-btn" onclick="submitContact()">Send Message</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">All-<span>You</span>-Need</div>
+    <p style="margin-top:0.3rem;font-size:0.78rem">Home & Fashion · Pune, Maharashtra · hello@allyouneed.in</p>
+  </div>
+  <p style="font-size:0.78rem">© 2026 All-You-Need. All rights reserved.</p>
+  <a href="https://pinterest.com" target="_blank" class="footer-pin">
+    <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 010 .345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+    Follow on Pinterest
+  </a>
+</footer>
+
+<script>
+// ─────────── CONFIG ───────────
+// CHANGE THIS PASSWORD before deploying!
+const ADMIN_PASSWORD = 'admin@AYN2026';
+const STORAGE_KEY = 'ayn_products_v1';
+
+const PSVG = `<svg viewBox="0 0 24 24" style="width:10px;height:10px;fill:white"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 010 .345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>`;
+
+const DEFAULT_PRODUCTS = [
+  {id:1,name:"Linen Accent Chair",desc:"Handwoven natural linen, solid oak frame",price:12499,cat:"furniture",icon:"🛋",bg:"p1"},
+  {id:2,name:"Terracotta Planter Set",desc:"Set of 3, hand-thrown clay pottery",price:3199,cat:"home",icon:"🪴",bg:"p2"},
+  {id:3,name:"Soy Candle Collection",desc:"Amber, sandalwood & vanilla — set of 4",price:1849,cat:"home",icon:"🕯",bg:"p3"},
+  {id:4,name:"Arched Wall Mirror",desc:"Matte black frame, 90 × 45 cm",price:6799,cat:"home",icon:"🪞",bg:"p4"},
+  {id:5,name:"Boho Floral Kurta",desc:"100% cotton, hand-block printed",price:2499,cat:"fashion",icon:"👗",bg:"p5"},
+  {id:6,name:"Macramé Tote Bag",desc:"Handwoven cotton rope, natural beige",price:1299,cat:"fashion",icon:"👜",bg:"p6"},
+  {id:7,name:"Rattan Pendant Light",desc:"Natural rattan, warm Edison bulb included",price:4199,cat:"lighting",icon:"💡",bg:"p7"},
+  {id:8,name:"Pure Silk Stole",desc:"Mulberry silk, 5 colours available",price:1999,cat:"fashion",icon:"🧣",bg:"p8"},
+  {id:9,name:"Wicker Storage Basket",desc:"Seagrass weave, set of 2 sizes",price:2299,cat:"home",icon:"🧺",bg:"p1"},
+  {id:10,name:"Block Print Cushion Set",desc:"Rajasthani print, 5 covers",price:1599,cat:"home",icon:"🛋",bg:"p2"},
+  {id:11,name:"Jhumka Earrings",desc:"Oxidised silver with meenakari work",price:899,cat:"accessories",icon:"💍",bg:"p6"},
+  {id:12,name:"Curved Floor Lamp",desc:"Matte brass finish, adjustable shade",price:7499,cat:"lighting",icon:"🪔",bg:"p3"},
+];
+
+const CAT_CLASS = {home:"cat-home",fashion:"cat-fashion",furniture:"cat-furniture",lighting:"cat-lighting",accessories:"cat-accessories"};
+const CAT_LABEL = {home:"Home Decor",fashion:"Fashion",furniture:"Furniture",lighting:"Lighting",accessories:"Accessories"};
+
+// ─────────── STATE ───────────
+let cart = [];
+let activeFilter = 'all';
+let searchQuery = '';
+let editingId = null;
+let nextId = 100;
+
+// ─────────── PRODUCTS (localStorage) ───────────
+function loadProducts() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (parsed.length) { nextId = Math.max(...parsed.map(p => p.id)) + 1; return parsed; }
+    }
+  } catch(e){}
+  return JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
+}
+
+function saveProducts() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(products)); } catch(e){}
+}
+
+let products = loadProducts();
+
+// ─────────── RENDER SHOP ───────────
+function renderProducts() {
+  const grid = document.getElementById('productsGrid');
+  const q = searchQuery.toLowerCase();
+  const filtered = products.filter(p => {
+    const mc = activeFilter === 'all' || p.cat === activeFilter;
+    const mq = !q || (p.name + p.desc + p.cat).toLowerCase().includes(q);
+    return mc && mq;
+  });
+  if (!filtered.length) {
+    grid.innerHTML = `<div class="no-results">No products found. Try a different search or filter.</div>`;
+    return;
+  }
+  grid.innerHTML = filtered.map(p => `
+    <div class="product-card">
+      <div class="product-img ${p.bg}">
+        <div class="product-img-bg ${p.bg}"></div>
+        <span class="cat-badge ${CAT_CLASS[p.cat]||'cat-home'}">${CAT_LABEL[p.cat]||p.cat}</span>
+        <button class="save-btn">${PSVG} Save</button>
+        <span class="product-icon-el">${p.icon}</span>
+      </div>
+      <div class="product-info">
+        <div class="product-name">${p.name}</div>
+        <div class="product-desc">${p.desc}</div>
+        <div class="product-footer">
+          <div class="product-price">₹${Number(p.price).toLocaleString('en-IN')}</div>
+          <button class="add-cart-btn" onclick="addToCart(${p.id})">Add to Cart</button>
+        </div>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('heroProductCount').textContent = products.length + '+';
+}
+
+function setFilter(cat, btn) {
+  activeFilter = cat;
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts();
+}
+
+function filterProducts() {
+  searchQuery = document.getElementById('searchInput').value;
+  renderProducts();
+}
+
+// ─────────── CART ───────────
+function addToCart(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  const ex = cart.find(x => x.id === id);
+  if (ex) ex.qty++; else cart.push({...p, qty:1});
+  updateCartUI();
+  showToast(`${p.icon} ${p.name} added to cart!`);
+}
+
+function updateCartUI() {
+  const total = cart.reduce((s,i) => s + i.qty, 0);
+  document.getElementById('cartCount').textContent = total;
+  document.getElementById('cartHeaderCount').textContent = total ? `(${total} item${total>1?'s':''})` : '';
+  const itemsEl = document.getElementById('cartItems');
+  const footerEl = document.getElementById('cartFooter');
+  if (!cart.length) {
+    itemsEl.innerHTML = `<div class="cart-empty"><span>🛍</span><p>Your cart is empty.<br/>Start adding some beautiful things!</p></div>`;
+    footerEl.style.display = 'none'; return;
+  }
+  footerEl.style.display = 'block';
+  itemsEl.innerHTML = cart.map(i => `
+    <div class="cart-item">
+      <div class="cart-thumb ${i.bg}">${i.icon}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${i.name}</div>
+        <div class="cart-item-price">₹${Number(i.price).toLocaleString('en-IN')}</div>
+        <div class="cart-qty">
+          <button class="qty-btn" onclick="changeQty(${i.id},-1)">−</button>
+          <span class="qty-num">${i.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${i.id},1)">+</button>
+        </div>
+      </div>
+      <button class="remove-item" onclick="removeItem(${i.id})">✕</button>
+    </div>`).join('');
+  const grand = cart.reduce((s,i) => s + (i.price * i.qty), 0);
+  document.getElementById('cartTotal').textContent = '₹' + grand.toLocaleString('en-IN');
+}
+
+function changeQty(id, d) {
+  const item = cart.find(x => x.id === id);
+  if (!item) return;
+  item.qty += d;
+  if (item.qty <= 0) cart = cart.filter(x => x.id !== id);
+  updateCartUI();
+}
+function removeItem(id) { cart = cart.filter(x => x.id !== id); updateCartUI(); }
+function openCart() { document.getElementById('cartDrawer').classList.add('open'); document.getElementById('cartOverlay').classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeCart() { document.getElementById('cartDrawer').classList.remove('open'); document.getElementById('cartOverlay').classList.remove('open'); document.body.style.overflow = ''; }
+
+// ─────────── CHECKOUT ───────────
+let origCheckout = '';
+function openCheckout() { closeCart(); document.getElementById('checkoutModal').classList.add('open'); }
+function closeCheckout() { document.getElementById('checkoutModal').classList.remove('open'); document.getElementById('checkoutContent').innerHTML = origCheckout; }
+function placeOrder() {
+  document.getElementById('checkoutContent').innerHTML = `
+    <div class="success-wrap">
+      <span>🎉</span>
+      <h4>Order Placed Successfully!</h4>
+      <p>Thank you for shopping with All-You-Need!<br/>We'll WhatsApp or email your confirmation shortly.</p>
+      <button class="btn-primary" style="margin-top:1.4rem" onclick="closeCheckout();cart=[];updateCartUI()">Back to Shop</button>
+    </div>`;
+}
+
+// ─────────── ADMIN LOGIN ───────────
+function openAdminLogin() { document.getElementById('adminLoginModal').classList.add('open'); setTimeout(() => document.getElementById('adminPassInput').focus(), 100); }
+function closeAdminLogin() { document.getElementById('adminLoginModal').classList.remove('open'); document.getElementById('adminPassInput').value = ''; document.getElementById('adminErr').style.display = 'none'; }
+function checkAdminLogin() {
+  const val = document.getElementById('adminPassInput').value;
+  if (val === ADMIN_PASSWORD) { closeAdminLogin(); openAdminPanel(); }
+  else { document.getElementById('adminErr').style.display = 'block'; document.getElementById('adminPassInput').value = ''; document.getElementById('adminPassInput').focus(); }
+}
+
+// ─────────── ADMIN PANEL ───────────
+function openAdminPanel() { document.getElementById('adminPanel').classList.add('open'); document.body.style.overflow = 'hidden'; renderAdminList(); }
+function exitAdmin() { document.getElementById('adminPanel').classList.remove('open'); document.body.style.overflow = ''; renderProducts(); }
+
+function updateIconPreview() {
+  const v = document.getElementById('ap-icon').value;
+  document.getElementById('iconPreview').textContent = v || '🛋';
+}
+
+function addProduct() {
+  const name = document.getElementById('ap-name').value.trim();
+  const price = parseInt(document.getElementById('ap-price').value);
+  const desc = document.getElementById('ap-desc').value.trim();
+  const cat = document.getElementById('ap-cat').value;
+  const bg = document.getElementById('ap-bg').value;
+  const icon = document.getElementById('ap-icon').value.trim() || '🛋';
+
+  if (!name || !price || !desc) { showToast('⚠️ Please fill in all required fields.'); return; }
+  if (price < 1) { showToast('⚠️ Price must be greater than 0.'); return; }
+
+  const newProduct = { id: nextId++, name, price, desc, cat, bg, icon };
+  products.unshift(newProduct);
+  saveProducts();
+  renderAdminList();
+  renderProducts();
+
+  // Reset form
+  document.getElementById('ap-name').value = '';
+  document.getElementById('ap-price').value = '';
+  document.getElementById('ap-desc').value = '';
+  document.getElementById('ap-icon').value = '';
+  document.getElementById('iconPreview').textContent = '🛋';
+
+  showToast(`✅ "${name}" added to store!`);
+}
+
+function renderAdminList() {
+  const list = document.getElementById('adminProductsList');
+  const countEl = document.getElementById('adminProductCount');
+  countEl.textContent = `(${products.length} products)`;
+  if (!products.length) { list.innerHTML = `<div class="admin-empty">No products yet. Add your first one above!</div>`; return; }
+  list.innerHTML = products.map(p => `
+    <div class="admin-product-row">
+      <div class="cart-thumb ${p.bg}">${p.icon}</div>
+      <div class="arow-info">
+        <div class="arow-name">${p.name}</div>
+        <div class="arow-meta">${CAT_LABEL[p.cat]||p.cat} · ${p.desc.substring(0,50)}${p.desc.length>50?'…':''}</div>
+      </div>
+      <div class="arow-price">₹${Number(p.price).toLocaleString('en-IN')}</div>
+      <div class="arow-actions">
+        <button class="edit-btn" onclick="openEditModal(${p.id})">Edit</button>
+        <button class="del-btn" onclick="deleteProduct(${p.id})">Delete</button>
+      </div>
+    </div>`).join('');
+}
+
+function deleteProduct(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  if (!confirm(`Delete "${p.name}"? This cannot be undone.`)) return;
+  products = products.filter(x => x.id !== id);
+  cart = cart.filter(x => x.id !== id);
+  saveProducts(); updateCartUI(); renderAdminList();
+  showToast(`🗑 "${p.name}" deleted.`);
+}
+
+function openEditModal(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  editingId = id;
+  document.getElementById('editName').value = p.name;
+  document.getElementById('editDesc').value = p.desc;
+  document.getElementById('editPrice').value = p.price;
+  document.getElementById('editCat').value = p.cat;
+  document.getElementById('editIcon').value = p.icon;
+  document.getElementById('editIconPreview').textContent = p.icon;
+  document.getElementById('editModal').classList.add('open');
+  document.getElementById('editIcon').oninput = () => {
+    document.getElementById('editIconPreview').textContent = document.getElementById('editIcon').value || '🛋';
+  };
+}
+
+function closeEditModal() { document.getElementById('editModal').classList.remove('open'); editingId = null; }
+
+function saveEdit() {
+  if (!editingId) return;
+  const p = products.find(x => x.id === editingId);
+  if (!p) return;
+  const name = document.getElementById('editName').value.trim();
+  const price = parseInt(document.getElementById('editPrice').value);
+  const desc = document.getElementById('editDesc').value.trim();
+  if (!name || !price || !desc) { showToast('⚠️ Please fill all fields.'); return; }
+  p.name = name; p.price = price; p.desc = desc;
+  p.cat = document.getElementById('editCat').value;
+  p.icon = document.getElementById('editIcon').value.trim() || p.icon;
+  // Update cart too
+  const ci = cart.find(x => x.id === editingId);
+  if (ci) { ci.name = p.name; ci.price = p.price; ci.icon = p.icon; }
+  saveProducts(); closeEditModal(); renderAdminList(); updateCartUI();
+  showToast(`✅ "${p.name}" updated!`);
+}
+
+// ─────────── MISC ───────────
+function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); document.getElementById('hamburger').classList.toggle('open'); }
+function submitContact() { showToast('✅ Message sent! We\'ll get back to you soon.'); }
+
+let toastT;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ─────────── INIT ───────────
+window.addEventListener('DOMContentLoaded', () => {
+  renderProducts();
+  updateCartUI();
+  origCheckout = document.getElementById('checkoutContent').innerHTML;
+});
+</script>
+</body>
+</html>
